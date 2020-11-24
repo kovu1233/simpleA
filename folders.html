@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+
+    <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline' gap:; style-src 'self' 'unsafe-inline'; media-src *" />
+
+    <link rel="stylesheet" type="text/css" href="css/index.css" />
+    <script type="text/javascript" src="js/jquery.js"></script>
+
+    <title>Simple Alarm Clock</title>
+</head>
+
+<body>
+	<div class="app">
+		<h2>Simple Alarm Clock</h2>
+
+		<section id="allAlarms">
+		<div class="newAlarmMenu" id="FolderAlarmsTitle">Folder Name</div><br>
+		
+		<div id="alarmStatus"></div>
+
+		<a href="#" class="btn large" onclick="playAudio('https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3');">Play Audio</a><br>
+		<a id="btnPause" href="#" class="btn large" onclick="pauseAudio(0);">Pause Playing Audio</a><br>
+		<a id="btnStop" href="#" class="btn large" onclick="stopAudio();">Pause Playing Audio</a><br>
+
+		<p id="audio_position"></p>
+
+		<audio controls>
+      <source :src="'assets/www/tones/rs/Daybreak.mp3'" type="audio/mpeg"/>
+</audio>
+
+
+
+		<div class="hiddenID"><input type="hidden" id="hiddenID" value=""></div>
+		<section class="alarmFrame" id="alarmFrame001">
+			<div id="a001">
+				<table id="alarms" align="center" width="90%" border="0">
+					<tr id="s001">
+						<td>
+							<div class="onoffswitch" onclick="modifyAlarm('hi');">
+							    <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch001" tabindex="0" checked onclick="switched(this.checked, this.id);">
+							    <label class="onoffswitch-label" for="myonoffswitch001">
+							        <span class="onoffswitch-inner"></span>
+							        <span class="onoffswitch-switch"></span>
+							    </label>
+							</div>
+						</td>
+						<td>
+							8:00<span class="sub" id="sub001">AM</span>
+							<span class="days" id="days001">weekdays</span>
+						</td>
+						<td>
+							<img src="img/alarmOn.png" id="alarmImg001">
+						</td>
+						<td class="dots" id="dots001">
+							...
+						</td>
+					</tr>
+				</table>		
+			</div>	
+		</section>
+		</section>
+
+
+		<section id="setAlarm" style="display: none;">
+			<div class="newAlarmMenu" id="newAlarmMenu">
+				SET NEW ALARM
+			</div>
+			<br><br>
+			<input type="time" value="08:00" id="alarmTiming001">
+			<br><br>
+			<span class="daySelect" onclick="chooseDay(this.id);" id="sun">S</span>&nbsp;&nbsp;
+			<span class="daySelect" onclick="chooseDay(this.id);" id="mon">M</span>&nbsp;&nbsp;
+			<span class="daySelect" onclick="chooseDay(this.id);" id="tue">T</span>&nbsp;&nbsp;
+			<span class="daySelect" onclick="chooseDay(this.id);" id="wed">W</span>&nbsp;&nbsp;
+			<span class="daySelect" onclick="chooseDay(this.id);" id="thu">T</span>&nbsp;&nbsp;
+			<span class="daySelect" onclick="chooseDay(this.id);" id="fri">F</span>&nbsp;&nbsp;
+			<span class="daySelect" onclick="chooseDay(this.id);" id="sat">S</span>
+			<br><br><br><br>
+			<table width="50%" align="center" border="0" cellspacing="2" cellpadding="2" style="font-size: 130%">
+				<tr onclick="AlarmName();">
+					<td rowspan="2" class="band"><img src="img/edit.png" width="30px"></td>
+					<td align="left" class="alarmMainName">Alarm Name</td>
+				</tr>
+				<tr onclick="AlarmName();">
+					<td align="left" id="alarmName001" class="alarmSubName">No Name</td>
+				</tr>
+				<tr><td colspan="2"><br></td></tr>
+				<tr onclick="AlarmTone();">
+					<td rowspan="2" class="band"><img src="img/alarmSound.png" width="30px"></td>
+					<td align="left" class="alarmMainName" valign="bottom">Ringtone</td>
+				</tr>
+				<tr onclick="AlarmTone();">
+					<td align="left" id="toneName001" class="alarmSubName" valign="top">Wake up.mp3</td>
+				</tr>
+			</table>
+
+			<table width="80%" align="center" border="0" style="margin-top:50%;">
+				<tr>
+					<td width="50%" onclick="goBack2();"><div class="button">Cancel</div></td>
+					<td width="50%" onclick="setAlarm();"><div class="button">Done</div></td>
+				</tr>
+			</table>
+
+		</section>
+
+
+		<div class="setFolderName" id="modifyAlarm"></div>
+		<div class="setFolderName" id="setAlarmName"></div>
+		<div class="pickAlarm" id="pickAlarm" style="display: none;">
+			<section id="alarmTones">
+				<table border="0" width="100%">
+					<tr>
+						<td class="tabs" style="font-weight: bolder; background-color: #000;font-style: normal;"><u>PICK AN ALARM</u></td>
+					</tr>
+					<tr>
+						<td class="tabs" id="ga" onclick="AlarmsFolder(this.id);">General Alarms</td>
+					</tr>
+					<tr>
+						<td class="tabs" id="rs" onclick="AlarmsFolder(this.id);">Rise & Shine</td>
+					</tr>
+					<tr>
+						<td class="tabs" id="ns" onclick="AlarmsFolder(this.id);">Nature Sounds</td>
+					</tr>
+					<tr>
+						<td class="tabs" id="gn" onclick="AlarmsFolder(this.id);">Gentle Nudge</td>
+					</tr>
+					<tr>
+						<td class="cancelAlarmTone" onclick="cancelAlarmTone();">Finished</td>
+					</tr>
+				</table>
+			</section>
+
+			<section id="ga01" style="display: none;">
+				<table border="0" width="100%">
+					<tr>
+						<td class="tabs" style="font-weight: bolder; background-color: #000;font-style: normal;"><u>GENERAL ALARMS</u></td>
+					</tr>
+					<tr>
+						<td class="tabs1" id="Alarm-Fast-A1" onclick="AlarmsFile(this.id);">Alarm Fast A1</td>
+					</tr>
+					<tr>
+						<td class="tabs1" id="Alarm-Fast-High-Pitch-A1">Alarm Fast High Pitch A1</td>
+					</tr>
+					<tr>
+						<td class="tabs1" id="Alarm-Fast-High-Pitch-A2">Alarm Fast High Pitch A2</td>
+					</tr>
+					<tr>
+						<td class="tabs1" id="Alarm-Fast-High-Pitch-A3-Ring-Tone">Alarm Fast High Pitch A3</td>
+					</tr>
+					<tr>
+						<td class="tabs1" id="Alarm-Fast-High-Pitch-B1">Alarm Fast High Pitch B1</td>
+					</tr>
+					<tr>
+						<td class="tabs1" id="Alarm-Slow-A1">Alarm Slow A1</td>
+					</tr>
+					<tr>
+						<td class="cancelAlarmTone" id="gaBack" onclick="backToAlarmTone(this.id);">Back</td>
+					</tr>
+				</table>
+			</section>
+
+
+			<section id="gn01" style="display: none;">
+				<table border="0" width="100%">
+					<tr>
+						<td class="tabs" style="font-weight: bolder; background-color: #000;font-style: normal;"><u>GENTLE NUDGE</u></td>
+					</tr>
+					<tr>
+						<td class="tabs1" id="Auratone" onclick="AlarmsFile(this.id);">Auratone</td>
+					</tr>
+					<tr>
+						<td class="tabs1" id="Happyday" onclick="AlarmsFile(this.id);">Happyday</td>
+					</tr>
+					<tr>
+						<td class="tabs1" id="Ping1" onclick="AlarmsFile(this.id);">Ping1</td>
+					</tr>
+					<tr>
+						<td class="tabs1" id="Ping2" onclick="AlarmsFile(this.id);">Ping2</td>
+					</tr>
+					<tr>
+						<td class="tabs1" id="Softchime" onclick="AlarmsFile(this.id);">Softchime</td>
+					</tr>
+					<tr>
+						<td class="cancelAlarmTone" id="gnBack" onclick="backToAlarmTone(this.id);">Back</td>
+					</tr>
+				</table>
+			</section>
+
+			<section id="ns01" style="display: none;">
+				<table border="0" width="100%">
+					<tr>
+						<td class="tabs" style="font-weight: bolder; background-color: #000;font-style: normal;"><u>NATURE SOUNDS</u></td>
+					</tr>
+					<tr>
+						<td class="tabs1" id="Freshstart" onclick="AlarmsFile(this.id);">Freshstart</td>
+					</tr>
+					<tr>
+						<td class="tabs1" id="MorningBirds" onclick="AlarmsFile(this.id);">MorningBirds</td>
+					</tr>
+					<tr>
+						<td class="cancelAlarmTone" id="nsBack" onclick="backToAlarmTone(this.id);">Back</td>
+					</tr>
+				</table>
+			</section>
+
+			<section id="rs01" style="display: none;">
+				<table border="0" width="100%" style="border-collapse: collapse;">
+					<tr>
+						<td colspan="2" class="tabs" style="font-weight: bolder; background-color: #000;font-style: normal;"><u>RISE & SHINE</u></td>
+					</tr>
+					<tr>
+						<td class="tabs1 indTbl" id="Daybreak" onclick="AlarmsFile('rs', this.id);">Daybreak</td>
+						<td width="60px" onclick="plTest('rs', this.id);" class="tabs1 indTblPl" id="Daybreak01"><img src="img/play.png" width="40px"></td>
+					</tr>
+					<tr>
+						<td class="tabs1 indTbl" id="EarlyRiser" onclick="AlarmsFile('rs', this.id);" style="text-indent: 40px;">EarlyRiser</td>
+						<td width="60px" onclick="plTest('rs', this.id);" class="tabs1 indTblPl" id="EarlyRiser01"><img src="img/play.png" width="40px"></td>
+					</tr>
+					<tr>
+						<td class="tabs1 indTbl" id="SlowMorning" onclick="AlarmsFile('rs', this.id);" style="text-indent: 40px;">SlowMorning</td>
+						<td width="60px" onclick="plTest('rs', this.id);" class="tabs1 indTblPl" id="SlowMorning01" ><img src="img/play.png" width="40px"></td>
+					</tr>
+					<tr>
+						<td colspan="2" class="cancelAlarmTone" id="rsBack" onclick="backToAlarmTone(this.id);">Back</td>
+					</tr>
+				</table>
+			</section>
+
+			<audio id="innerAudio"></audio>
+
+			</section>
+		</div>
+
+		<div id="backToFolders" onclick="backToFolders2();"><img src="img/back.png" width="30px"></div>
+		<div id="addAlarm" onclick="addAlarm2();">+</div>
+	</div>
+
+
+    
+	<script type="text/javascript" src="cordova.js"></script>
+	<script type="text/javascript" src="js/folder.js"></script>
+    
+    <script type="text/javascript">
+        app.initialize();
+    </script>
+</body>
+
+</html>
